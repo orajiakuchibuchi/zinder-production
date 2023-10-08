@@ -14,14 +14,14 @@ function createFile(path, data){
     });
   }
   export default deletecons.schedule('30 * * * *', function() {
-        fs.unlink(path.normalize(filetPath), err => {
-          if (err) {
-            createFile(path.normalize(filetPath), err);
-            throw err;
-          };
-          createFile(path.normalize(filetPath), '');
-          console.log('Error file successfully deleted');
-        });
+        // fs.unlink(path.normalize(filetPath), err => {
+        //   if (err) {
+        //     createFile(path.normalize(filetPath), err);
+        //     throw err;
+        //   };
+        //   createFile(path.normalize(filetPath), '');
+        //   console.log('Error file successfully deleted');
+        // });
       });
 
 

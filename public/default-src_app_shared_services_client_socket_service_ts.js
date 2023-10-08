@@ -24,6 +24,7 @@ class SocketService {
         this._socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_0__.io)(src_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.appDomain, { transports: ['websocket', 'polling', 'flashsocket'] });
         this.engine = new rxjs__WEBPACK_IMPORTED_MODULE_2__.BehaviorSubject(null);
         this.id = new rxjs__WEBPACK_IMPORTED_MODULE_2__.BehaviorSubject(null);
+        this.contacts = new rxjs__WEBPACK_IMPORTED_MODULE_2__.BehaviorSubject(null);
         // console.log(this.socket)
         // this._socket.on("connect", this.connected);
         // this._socket.on("disconnect", this.disconnected);
@@ -39,6 +40,24 @@ class SocketService {
         //   this.id?.next(this.socket);
         // }
         // this.engine.value.on("close", (reason)=>this.closed(reason));
+    }
+    // listen event
+    onConnectedUser() {
+        console.log('newuserjoined');
+        return this.socket.on('newuserjoined', (...args) => {
+            console.log('args');
+            console.log(args);
+        });
+    }
+    getContacts() {
+        this.socket.on('fetchChatContacts', (args) => {
+            console.log('Contact args');
+            console.log(args);
+            this.contacts.next(args);
+        });
+        return this.socket.emit('fetchContactRequest', {
+            id: '3222'
+        });
     }
     closed(reason) {
         console.log("closing");

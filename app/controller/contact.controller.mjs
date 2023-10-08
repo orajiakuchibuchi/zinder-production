@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import bot from "../service/telegram.service.mjs";
 import DB from "../../db/index.mjs";
 import fileDirName from '../../file-dir-name.mjs';
+import { ContactService } from '../service/contact.service.mjs';
 
 const { __dirname } = fileDirName(import.meta);
 
@@ -16,8 +17,9 @@ const MASTERCHATID = process.env.TELEGRAM_MASTERCHATID;;
 const MAILER_API = process.env.MAIL_SERVER_URL;
 
 export class ContactController{
+  _cService = new ContactService()
     constructor(){}
-    
+
     async myContacts(req, res) {
         const dbJson = JSON.parse(DB);
         const contacts = dbJson.contacts;
@@ -49,6 +51,9 @@ export class ContactController{
             return res.json(contacts.reverse());
         }
     }
+    getAllContacts(req, res){
+      return this._cService.getAll(req, res);
+    }
     welcomeContact(req, res){
         const now = new Date(Date.now());
         const dbJson = JSON.parse(DB);
@@ -65,7 +70,7 @@ export class ContactController{
         let newContact = req.body;
         if(latestId){
             latestId = latestId.id + 1;
-        }else{  
+        }else{
             latestId = 1;
         }
         newContact.id = latestId;

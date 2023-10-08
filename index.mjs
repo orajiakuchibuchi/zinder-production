@@ -40,10 +40,21 @@ app.use(compression());
 
 // For Every Client Connection, This Event is triggered.
 // A new socketcontroller object is created and with the socket instance via the `init` method.
-io.on('connection', (socket) => new SocketController().init(socket));
+io.on('connection', (socket) =>{
+  const socketcontroller = new SocketController();
+  socketcontroller.init(socket);
+  socket.on('fetchContactRequest', ()=>socketcontroller.getContacts(socket));
+  socket.on('new_message', ()=>socketcontroller.newMessage(socket));
+});
 
 /* place any backend routes you have here */
 
+// Contact Api
+app.get('contact',(req, res)=>{
+  return
+})
+
+/* end of backend routes */
 app.use(function(req, res, next) {
 
     //if the request is not html then move along

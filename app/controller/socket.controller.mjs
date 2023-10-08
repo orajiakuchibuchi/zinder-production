@@ -17,9 +17,15 @@ export class SocketController {
   }
   // Public method to set save a socket session ID
   init(socket){
-    this.socketservice.saveConnection(socket.id);
+    this.socketservice.saveConnection(socket.id, socket);
   }
   connection(socket){
-    this.socketservice.saveConnection(socket.id);
+    this.socketservice.saveConnection(socket.id, socket);
+  }
+  getContacts(socket){
+    this.socketservice.getChatContact$(socket)
+  }
+  newMessage(socket){
+    this.socketservice.newMessage$(socket)
   }
 }

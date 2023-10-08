@@ -1,7 +1,7 @@
 
 # dependencies
 /node_modules
-/public/assets
-/db/record.backup.json
+/public
+/db
 # /db/record.json
 package-lock.json
